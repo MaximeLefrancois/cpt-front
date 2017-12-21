@@ -1,10 +1,21 @@
 node {
-  stage("Récupération des sources") {
-    checkout scm
-  }
 
-  stage("Deploiement de l'application Front") {
-    sh "echo APPLICATION-FRONT"
-  }
-    echo "La branche ${env.BRANCH_NAME} a été déployé"
+	parameters {
+        string(name: 'ENV', defaultValue: 'develop', description: 'Quel environnement de deploiement?')
+    }
+	
+	stage("Récupération des sources") {
+		checkout scm
+	}
+
+	stage("Deploiement de l'application Front") {
+		sh "echo APPLICATION-FRONT"
+	}
+	
+	if (params.ENV == 'master') {
+		stage("Deploiement de l'application Back en prod") {
+			sh "echo APPLICATION-BACK"
+		}
+	}
+	echo "La release ${env.BRANCH_NAME} a été déployé sur l'environnement ${params.ENV}"
 }
