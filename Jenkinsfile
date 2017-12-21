@@ -1,8 +1,10 @@
-node {
+properties([
+   parameters([
+      string(name: 'ENV', defaultValue: 'horsprod', description: 'Quel environnement de deploiement? ("prod" ou "horsprod")')
+   ])
+])
 
-	parameters {
-        string(name: 'ENV', defaultValue: 'develop', description: 'Quel environnement de deploiement?')
-    }
+node {
 	
 	stage("Récupération des sources") {
 		checkout scm
@@ -12,7 +14,7 @@ node {
 		sh "echo APPLICATION-FRONT"
 	}
 	
-	if (params.ENV == 'master') {
+	if (params.ENV == 'prod') {
 		stage("Deploiement de l'application Back en prod") {
 			sh "echo APPLICATION-BACK"
 		}
