@@ -32,10 +32,6 @@ node {
 	echo "La release ${env.BRANCH_NAME} a été déployé sur l'environnement ${params.ENV_FRONT}"
 }
 
-def readVersionFrom2(String packageJsonPath) {
-	cat packageJsonPath | grep 'version' | head -1 | awk -F: '{print $2}' | sed 's/[\",]//g' | tr -d '[[:space:]]'
-}
-
 @NonCPS
 def readVersionFrom(String packageJsonPath) {
     json.parse(packageJsonPath).version.toString()
