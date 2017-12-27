@@ -12,7 +12,7 @@ node {
 	
 	tag = readVersionFrom('./package.json')
 
-	echo "${tag}"
+	echo "La version du package.json est : ${tag}"
 	
 	sh "echo le login est :${LOGIN} et le mot de passe est ${PWD}. "
 	
@@ -33,7 +33,7 @@ node {
 }
 
 def readVersionFrom2(String packageJsonPath) {
-	cat ./package.json | grep 'version' | head -1 | awk -F: '{print $2}' | sed 's/[\",]//g' | tr -d '[[:space:]]'
+	cat packageJsonPath | grep 'version' | head -1 | awk -F: '{print $2}' | sed 's/[\",]//g' | tr -d '[[:space:]]'
 }
 
 @NonCPS
