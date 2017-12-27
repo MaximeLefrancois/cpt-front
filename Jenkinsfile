@@ -10,7 +10,7 @@ properties([
 
 node {
 	
-	String tag = readVersionFrom('./package.json')
+	String tag = json.parse('./package.json').version.toString()
 
 	echo "${tag}"
 	
