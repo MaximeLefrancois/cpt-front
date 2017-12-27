@@ -1,13 +1,19 @@
 
 properties([
    parameters([
-      string(defaultValue: 'horsprod', description: 'Quel environnement de deploiement ("prod" ou "horsprod")?', name: 'ENV_FRONT'),
-	  string(defaultValue: '', description: 'Identifiant compte AD', name: 'LOGIN'),
-	  password(defaultValue: '', description: 'Password compte AD', name: 'PWD')
+	string(defaultValue: 'horsprod', description: 'Quel environnement de deploiement ("prod" ou "horsprod")?', name: 'ENV_FRONT'),
+	booleanParam(defaultValue: false, description: 'Déploiement auto', name: 'AUTO_PARAM'),
+	string(defaultValue: '', description: 'Identifiant compte AD', name: 'LOGIN'),
+	password(defaultValue: '', description: 'Password compte AD', name: 'PWD')
    ])
 ])
 
 node {
+	
+	String tag = readVersionFrom('./package.json')
+
+	echo "${tag}"
+	
 	sh "echo le login est :${LOGIN} et le mot de passe est ${PWD}. "
 	
 	stage("Récupération des sources") {
